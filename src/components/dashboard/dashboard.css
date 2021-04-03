@@ -1,0 +1,57 @@
+.dashboard {
+    display: flex;
+    align-items: center;
+    background-color: #e4e4e4;
+}
+.dashboard__Container {
+    width: 80%;
+    height: 1000px;
+    margin: 0 10%;
+    border-left: 1px solid rgb(219, 215, 215);
+    border-right: 1px solid rgb(219, 215, 215);
+    border-bottom: 1px solid rgb(219, 215, 215);
+    background-color: white;
+  }
+  .dashboard__columnOne {
+    width: 20%;
+    height: 780px;
+    margin-left: 15px;
+    border-right: 1px solid rgb(219, 215, 215);
+    background-color: #f7f7f7;
+  }
+  .sidebar__titleContainer {
+    width: 90%;
+    height: 30px;
+    margin: 10px;
+    border-bottom: 1px solid rgb(214, 211, 211);
+  }
+  .sidebar__title {
+    font-size: 15px;
+    font-weight: 600;
+    color: rgb(29, 28, 28);
+  }
+  .Button {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: #4b62e6;
+    border-radius: 3px;
+    width: 150px;
+    height: 30px;
+    border: 1px solid;
+    margin-top: 15px;
+    border-color: #4b62e6 #4b62e6 #4b62e6;
+  }
+  .Button:active {
+      background: #95e470;
+  }
+   /* Add shadows to create the "card" effect */
+  .cardGlobal {
+    box-shadow: 0px 4px 8px 2px rgba(0, 0, 0, 0.2);
+    transition: 0.3s;
+  }
+  
+  /* On mouse-over, add a deeper shadow */
+  .cardGlobal:hover {
+    box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.2);
+  }

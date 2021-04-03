@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Button, Col, Form, Row } from 'react-bootstrap';
+import { Button, Card, Col, Form, Row } from 'react-bootstrap';
 import { connect } from 'react-redux';
 import { Redirect, withRouter } from 'react-router';
 import { addCorporate, updateCorporate, corporateData } from '../../redux/actions';
@@ -23,7 +23,6 @@ class AddCorporation extends Component {
 
     constructor() {
         super();
-        console.log('cons')
         this.state = {
             name: '',
             address: '',
@@ -41,9 +40,8 @@ class AddCorporation extends Component {
 
     async componentWillMount() {
         const { corporatesResult } = this.props;
-        console.log('hello')
-        if (corporatesResult && corporatesResult.data) {
-            let data = corporatesResult.data;
+        if (corporatesResult && corporatesResult.data && corporatesResult.data.length) {
+            let data = corporatesResult.data[0];
             await this.setState({
                 name: data.name,
                 address: data.address,
@@ -54,6 +52,19 @@ class AddCorporation extends Component {
                 email2: data.email2,
                 userlimit: data.userlimit,
                 buttonName: corporatesResult.actionPerform
+            })
+        }
+        else {
+            await this.setState({
+                name: '',
+                address: '',
+                pincode: '',
+                phone1: '',
+                phone2: '',
+                email1: '',
+                email2: '',
+                userlimit: '',
+                buttonName: 'Add'
             })
         }
     }
@@ -79,13 +90,13 @@ class AddCorporation extends Component {
         if (buttonName === 'Add') {
             addCorporateAction(details).then(() => {
                 const { addResponse } = this.props;
-                if (addResponse && addResponse.status === 'sucess') {
+                if (addResponse && addResponse.status === 'Sucess') {
                     this.setState({ isRedirect: true })
                 }
             })
         }
         else if (buttonName === 'Update') {
-            const id = corporatesResult.data.id;
+            const id = corporatesResult.data[0].id;
             updateCorporateAction(details, id).then(() => {
                 const { addResponse } = this.props;
                 if (addResponse && addResponse.status === 1) {
@@ -96,18 +107,13 @@ class AddCorporation extends Component {
 
     }
 
-    componentWillUnmount() {
-        console.log('call')
-        corporateData([], 'Add');
-    }
-
     render() {
         const { name, address, email1, email2, phone1, phone2, pincode, userlimit, isRedirect, buttonName } = this.state;
         if (isRedirect) {
-            return <Redirect to="/Dashboard" />;
+            return <Redirect to="/Dashboard" push />;
         }
         return (
-            <div style={{ margin: '20px' }}>
+            <Card style={{ margin: '20px', padding: '20px' }}>
                 <Form>
                     <Form.Group as={Row} controlId="name">
                         <Form.Label column sm="2">
@@ -131,7 +137,7 @@ class AddCorporation extends Component {
                             Pincode
                         </Form.Label>
                         <Col sm="10">
-                            <Form.Control placeholder="Pincode" type='text' value={pincode} onChange={this.handleChange} />
+                            <Form.Control placeholder="Pincode" type='text' value={pincode} onChange={this.handleChange} maxLength={6} />
                         </Col>
                     </Form.Group>
 
@@ -140,7 +146,7 @@ class AddCorporation extends Component {
                             Phone1
                         </Form.Label>
                         <Col sm="10">
-                            <Form.Control placeholder="Phone1" type='text' value={phone1} onChange={this.handleChange} />
+                            <Form.Control placeholder="Phone1" type='text' value={phone1} onChange={this.handleChange} maxLength={10} />
                         </Col>
                     </Form.Group>
                     <Form.Group as={Row} controlId="phone2">
@@ -148,7 +154,7 @@ class AddCorporation extends Component {
                             Phone2
                         </Form.Label>
                         <Col sm="10">
-                            <Form.Control placeholder="Phone2" type='text' value={phone2} onChange={this.handleChange} />
+                            <Form.Control placeholder="Phone2" type='text' value={phone2} onChange={this.handleChange} maxLength={10} />
                         </Col>
                     </Form.Group>
 
@@ -174,22 +180,27 @@ class AddCorporation extends Component {
                             Userlimit
                         </Form.Label>
                         <Col sm="10">
-                            <Form.Control placeholder="Userlimit" type='number' value={userlimit} onChange={this.handleChange} />
+                            <Form.Control placeholder="Userlimit" type='text' value={userlimit} onChange={this.handleChange} />
                         </Col>
                     </Form.Group>
-                    <Form.Group as={Row} align="center">
-                        <Col>
-                            <Button
-                                type="button"
-                                onClick={() => this.handleSubmit()}
-                                className="btn btn-primary btn-fill btn-wd"
-                            >
-                                {buttonName}
-                            </Button>
-                        </Col>
-                    </Form.Group>
+                    {
+                        buttonName && (
+                            <Form.Group as={Row} align="center">
+                                <Col>
+                                    <Button
+                                        type="button"
+                                        onClick={() => this.handleSubmit()}
+                                        className="btn btn-primary btn-fill btn-wd"
+                                        disabled={!name || !email1 || !email2 || !phone1 || !phone2 || !address || !pincode || !userlimit}
+                                    >
+                                        {buttonName}
+                                    </Button>
+                                </Col>
+                            </Form.Group>
+                        )
+                    }
                 </Form>
-            </div>
+            </Card>
         );
     }
 }

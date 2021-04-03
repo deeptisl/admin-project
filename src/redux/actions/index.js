@@ -24,7 +24,6 @@ export function addCorporate(details) {
             })
             .then(response => response.data)
             .then(json => {
-                console.log('test', json)
                 dispatch({ type: ADD_CORPORATE, payload: json });
             });
     };
@@ -40,7 +39,6 @@ export function updateCorporate(details, id) {
             })
             .then(response => response.data)
             .then(json => {
-                console.log(json)
                 dispatch({ type: UPDATE_CORPORATE, payload: json });
             });
     };
@@ -61,7 +59,7 @@ export function allCorporates() {
     };
 }
 
-export function viewSingleCorporate(id) {
+export function viewSingleCorporate(id, actionPerform) {
     return async dispatch => {
         const headers = { 'Content-Type': 'application/json' };
         return axios
@@ -76,27 +74,14 @@ export function viewSingleCorporate(id) {
 }
 
 export function corporateData(data, actionPerform) {
+    let dataArray = [];
+    dataArray.push(data)
     let result = {
-        data,
+        data: dataArray,
         actionPerform
     }
-    console.log('onClick',result)
     return dispatch => {
         dispatch({ type: SINGLE_CORPORATE, payload: result });
     };
 }
-
-// export function corporateData(data) {
-//     return async dispatch => {
-//         const headers = { 'Content-Type': 'application/json' };
-//         return axios
-//             .get(`http://192.81.213.186:9002/admin/viewSingleCorporate/${id}`, {
-//                 headers
-//             })
-//             .then(response => response.data)
-//             .then(json => {
-//                 dispatch({ type: SINGLE_CORPORATE, payload: json });
-//             });
-//     };
-// }
 

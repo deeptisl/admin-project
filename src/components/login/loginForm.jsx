@@ -2,6 +2,9 @@ import React, { Component } from 'react';
 import { Form, Button } from 'react-bootstrap';
 import { withRouter, Redirect } from 'react-router-dom';
 import { connect } from 'react-redux';
+import { Icon } from 'react-icons-kit';
+import { eye } from 'react-icons-kit/fa/eye';
+import { eyeSlash } from 'react-icons-kit/fa/eyeSlash';
 import './login.css';
 import { userLogin } from '../../redux/actions';
 
@@ -24,6 +27,8 @@ class LoginForm extends Component {
             email: '',
             password: '',
             loginSuccess: '',
+            passwordType: 'password',
+            showPassword: false
         };
         this.handleChange = this.handleChange.bind(this);
     }
@@ -45,21 +50,29 @@ class LoginForm extends Component {
             else {
                 this.setState({ loginSuccess: 'Error' })
             }
-            console.log('loginResponse', loginResponse)
         });
     }
 
+    handleChangePwd() {
+        const { showPassword } = this.state;
+        if (!showPassword) {
+            this.setState({ passwordType: 'text', showPassword: true });
+        } else {
+            this.setState({ passwordType: 'password', showPassword: false });
+        }
+    }
 
     render() {
         const {
             email,
             password,
             passwordType,
-            loginSuccess
+            loginSuccess,
+            showPassword
         } = this.state;
 
         if (loginSuccess === 'Success') {
-            return <Redirect to="/Dashboard" />;
+            return <Redirect to="/Dashboard" push />;
         }
         return (
             <div>
@@ -93,15 +106,38 @@ class LoginForm extends Component {
                             onChange={this.handleChange}
                             autoComplete="on"
                         />
+                        <div className="btn btn-default icon">
+                            <span>
+                                {!showPassword ? (
+                                    <Button
+                                        onClick={() => this.handleChangePwd()}
+                                        className="btn btn-primary btn-xs"
+                                    >
+                                        {' '}
+                                        <Icon size={15} icon={eye} />
+                                    </Button>
+                                ) : (
+                                    <Button
+                                        onClick={() => this.handleChangePwd()}
+                                        className="btn btn-primary btn-xs"
+                                    >
+                                        {' '}
+                                        <Icon size={15} icon={eyeSlash} />
+                                    </Button>
+                                )}
+                            </span>
+                        </div>
+
                     </Form.Group>
                     {loginSuccess === 'Error' && (
-                        <p className="errorMsg">Invalid email   or password .</p>
+                        <p className="errorMsg">Invalid email or password .</p>
                     )}
                     <Button
                         className="btn btn-primary btn-fill btn-wd"
                         onClick={() => this.handleSubmit()}
                         id="login"
                         type="button"
+                        disabled={!email || !password}
                     >
                         Login
                    </Button>

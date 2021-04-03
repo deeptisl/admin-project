@@ -9,11 +9,7 @@ const App = () => (
   <div>
     <Route exact path="/" component={Login} />
     <Route exact path="/Dashboard" component={Dashboard} />
-    <Route path="/Dashboard/AddCorporates" component={AddCorporates} />
-    {/* <Route path="/HomePage" component={HomePage} />
-    <Route path="/ForgotPassword" component={ForgotPassword} />
-    <Route path="/EnterOTP" component={EnterOTP} />
-    <Route path="/ResetPassword" component={ResetPassword} /> */}
+    <Route exact path="/Dashboard/AddCorporates" component={AddCorporates} />
   </div>
 );
 
