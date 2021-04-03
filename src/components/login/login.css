@@ -1,0 +1,62 @@
+@media all and (min-width: 480px) {
+    .App {
+      min-height: 100vh;
+      text-align: center;
+      background-size: cover;
+    }
+  
+    .App-Layout {
+      min-width: 320px;
+      max-width: 400px;
+      height: auto;
+      position: absolute;
+      top: 20%;
+      left: 0;
+      right: 30px;
+      margin: auto;
+      padding: 20px;
+      background-color: white;
+    }
+  
+    .credit {
+      position: absolute;
+      float: right;
+      bottom: 0;
+    }
+    .errorMsg {
+      width: 100%;
+      margin-top: 0.25rem;
+      font-size: 90%;
+      color: #dc3545;
+    }
+  }
+  
+  .input-with-icon {
+    position: relative;
+  
+    width: 25rem;
+    height: 3.2rem;
+    box-sizing: border-box;
+  }
+  
+  .input-with-icon .form-control {
+    height: 100%;
+    width: 100%;
+    padding-right: 3.65rem;
+    box-sizing: border-box;
+  }
+  
+  .input-with-icon .icon {
+    border-color: transparent !important;
+    position: absolute;
+    right: 0.3rem;
+    top: 0.3rem;
+    width: 2.6rem;
+    height: 2.6rem;
+    border-radius: 0.3rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    box-sizing: border-box;
+  }
+  
